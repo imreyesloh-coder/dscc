@@ -31,8 +31,6 @@ def create_plan(user_id):
     try:
         plan_data = generate_plan(user)
     except Exception:
-        # Fail loud, not silent, this is the exact failure mode that
-        # broke IPPT+'s AI feature for months without anyone noticing.
         return jsonify(
             {"error": "AI plan generation is temporarily unavailable, please try again shortly."}
         ), 502
@@ -60,9 +58,7 @@ def create_checkin(plan_id):
         return jsonify(
             {"error": "AI check-in processing is temporarily unavailable, please try again shortly."}
         ), 502
- 
-    # Apply the model's proposed adjustments to the stored plan ourselves,
-    # rather than letting the model return and overwrite the whole plan.
+
     sessions_by_id = {
         session["session_id"]: session
         for week in plan.plan_json["weeks"]
@@ -76,9 +72,6 @@ def create_checkin(plan_id):
         session["adjustment"] = {"reason": adj["reason"], "source": "checkin"}
         if adj.get("changes"):
             session.update(adj["changes"])
- 
-    # JSON columns don't auto-detect in-place nested mutation,
-    # so flag it explicitly or the update silently won't be saved.
     flag_modified(plan, "plan_json")
  
     checkin = Checkin(
