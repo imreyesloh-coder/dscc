@@ -2,7 +2,7 @@ import os
  
 import anthropic
  
-client = anthropic.Anthropic(api_key=os.environ["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"])
+client = anthropic.Anthropic(PRIVATE)
 PLAN_MODEL = "claude-sonnet-5"
 CHECKIN_MODEL = "claude-haiku-4-5-20251001"
 
