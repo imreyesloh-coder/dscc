@@ -2,8 +2,8 @@ import os
  
 import anthropic
  
-client = anthropic.Anthropic(PRIVATE)
-PLAN_MODEL = "claude-sonnet-5"
+client = anthropic.Anthropic(api_key=os.environ.get('ANTHROPIC_API_KEY'))
+PLAN_MODEL = "claude-sonnet-5-5"
 CHECKIN_MODEL = "claude-haiku-4-5-20251001"
 
 IPPT_RULES = """
