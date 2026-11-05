@@ -4,4 +4,7 @@ flask-cors
 anthropic
 python-dotenv
 psycopg2-binary
- 
+scikit-learn
+pandas
+numpy
+joblib
