@@ -3,6 +3,7 @@ from sqlalchemy.orm.attributes import flag_modified
  
 from claude_client import adjust_plan, generate_plan
 from models import Checkin, Plan, User, db
+from predictive_model import predict_future_scores
  
 api = Blueprint("api", __name__)
  
@@ -84,4 +85,15 @@ def create_checkin(plan_id):
     db.session.commit()
  
     return jsonify({"reply": result["reply_to_user"], "plan": plan.plan_json})
+
+
+@api.route("/predict", methods=["POST"])
+def predict():
+    data = request.get_json(silent=True) or {}
+    try:
+        return jsonify(predict_future_scores(data))
+    except (ValueError, TypeError) as e:
+        return jsonify({"error": str(e)}), 400
+
+
  
