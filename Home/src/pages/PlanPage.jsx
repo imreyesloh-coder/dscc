@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import Header from '../components/Header.jsx';
 import BottomNav from '../components/BottomNav.jsx';
-import ChangePlanModal from '../components/ChangePlanModal.jsx';
+import ChangePlanModal from '../components/ChangePlanModal.js';
 import { getTrainingPlan, setDayDone, requestPlanChange } from '../api/mockApi.js';
 import './PlanPage.css';
 
