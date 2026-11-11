@@ -62,3 +62,67 @@ button, input { font-family: inherit; }
   border: 1px solid var(--khaki-300);
   border-radius: var(--radius-card);
 }
+
+/* ---------- Shared page layout (Plan, Stats, ...) ---------- */
+.page {
+  flex-grow: 1;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+ 
+.page-status {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted);
+}
+ 
+.page-error {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #f5ddd0;
+  color: #8a3310;
+  font-weight: 600;
+}
+ 
+/* ---------- Buttons ---------- */
+.btn {
+  height: 48px;
+  padding: 0 16px;
+  border-radius: var(--radius-button);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+ 
+.btn--outline {
+  border: 2px solid var(--olive-900);
+  background: transparent;
+  color: var(--olive-900);
+}
+ 
+.btn--dark {
+  border: none;
+  background: var(--olive-900);
+  color: var(--gold-500);
+}
+ 
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+ 
+/* Hidden on screen but read by screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

@@ -50,3 +50,12 @@
   line-height: 1;
   color: var(--gold-500);
 }
+
+.header__page-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.1;
+  color: var(--sand-100);
+}
