@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Header from '../components/Header.jsx';
 import BottomNav from '../components/BottomNav.jsx';
-import PerformanceChart from '../components/PerformanceChart.js';
+import PerformanceChart from '../components/PerformanceChart.jsx';
 import { getStats } from '../api/mockApi.js';
 import { formatRunTime } from '../utils/format.js';
 import { getPercentChange, getProgressStatus, IMPROVING_THRESHOLD } from '../utils/progress.js';
@@ -43,7 +43,7 @@ export default function StatsPage() {
   // 5. The page
   return (
     <div className="app-shell">
-      <Header username="Tan" title="Statistics" />
+      <Header username="Zane" title="Statistics" />
 
       <main className="page">
         {/* Highest / lowest */}
