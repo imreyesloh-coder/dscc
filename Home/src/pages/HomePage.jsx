@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Header from '../components/Header.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 import ScoreCard from '../components/ScoreCard.jsx';
+import PredictionCard from '../components/PredictionCard.jsx';
 import StationStepper from '../components/StationStepper.jsx';
 import { getHomeData, updateStations } from '../api/mockApi.js';
 import { formatRunTime, getGreeting } from '../utils/format.js';
@@ -55,6 +56,7 @@ export default function HomePage() {
         </section>
 
         <ScoreCard current={score.current} previous={score.previous} />
+        <PredictionCard stations={stations} />
 
         <section className="home__stations">
           <h3 className="section-label">Update your stations</h3>
