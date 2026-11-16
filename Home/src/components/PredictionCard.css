@@ -1,0 +1,61 @@
+.prediction-card {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.prediction-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prediction-card__badge {
+  background: var(--gold-500);
+  color: var(--olive-900);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.prediction-card__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.prediction-card__tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 4px;
+  border: 1px solid var(--khaki-300);
+  border-radius: 8px;
+  background: var(--white);
+}
+
+.prediction-card__value {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.prediction-card__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.prediction-card__note,
+.prediction-card__status {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
