@@ -9,6 +9,8 @@ class User(db.Model):
     __tablename__ = "users"
  
     id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50))
+    age = db.Column(db.Integer)  # needed for IPPT scoring
     height_cm = db.Column(db.Float, nullable=False)
     weight_kg = db.Column(db.Float, nullable=False)
     pushups_baseline = db.Column(db.Integer)
@@ -19,6 +21,7 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
  
     plans = db.relationship("Plan", backref="user", lazy=True)
+    results = db.relationship("Result", backref="user", lazy=True)
  
  
 class Plan(db.Model):
@@ -42,4 +45,17 @@ class Checkin(db.Model):
     message = db.Column(db.Text, nullable=False)
     resulting_adjustment = db.Column(db.JSON)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
- 
+
+
+class Result(db.Model):
+    """One IPPT station reading per user per day (the Home page steppers)."""
+
+    __tablename__ = "results"
+    __table_args__ = (db.UniqueConstraint("user_id", "taken_on", name="uq_result_user_day"),)
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    taken_on = db.Column(db.Date, nullable=False)
+    pushups = db.Column(db.Integer, nullable=False)
+    situps = db.Column(db.Integer, nullable=False)
+    run_seconds = db.Column(db.Integer, nullable=False)

@@ -2,8 +2,10 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy.orm.attributes import flag_modified
  
 from claude_client import adjust_plan, generate_plan
-from models import Checkin, Plan, User, db
+from extensions import ai_limit
+from models import Checkin, Plan, Result, User, db
 from predictive_model import predict_future_scores
+from services import current_summary, today_sg
  
 api = Blueprint("api", __name__)
  
@@ -12,6 +14,8 @@ api = Blueprint("api", __name__)
 def create_user():
     data = request.get_json()
     user = User(
+        username=data.get("username"),
+        age=data.get("age"),
         height_cm=data["height_cm"],
         weight_kg=data["weight_kg"],
         pushups_baseline=data.get("pushups_baseline"),
@@ -21,16 +25,29 @@ def create_user():
         injury_notes=data.get("injury_notes"),
     )
     db.session.add(user)
+    db.session.flush()
+    # The baselines are the user's first reading, so the stats pages have something to show.
+    if None not in (user.pushups_baseline, user.situps_baseline, user.run_2_4km_baseline_sec):
+        db.session.add(
+            Result(
+                user_id=user.id,
+                taken_on=today_sg(),
+                pushups=user.pushups_baseline,
+                situps=user.situps_baseline,
+                run_seconds=user.run_2_4km_baseline_sec,
+            )
+        )
     db.session.commit()
     return jsonify({"user_id": user.id}), 201
  
  
 @api.route("/users/<int:user_id>/plans", methods=["POST"])
+@ai_limit
 def create_plan(user_id):
     user = User.query.get_or_404(user_id)
  
     try:
-        plan_data = generate_plan(user)
+        plan_data = generate_plan(user, current_summary=current_summary(user))
     except Exception:
         return jsonify(
             {"error": "AI plan generation is temporarily unavailable, please try again shortly."}
@@ -49,6 +66,7 @@ def get_plan(plan_id):
  
  
 @api.route("/plans/<int:plan_id>/checkins", methods=["POST"])
+@ai_limit
 def create_checkin(plan_id):
     plan = Plan.query.get_or_404(plan_id)
     message = request.get_json()["message"]

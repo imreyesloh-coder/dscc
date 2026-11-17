@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:   # lets you re-run it from the Actions tab, e.g. after changing a variable
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Home
+    env:
+      VITE_API_URL: ${{ vars.VITE_API_URL }}
+      VITE_USE_MOCK: ${{ vars.VITE_USE_MOCK }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check settings
+        run: |
+          if [ "$VITE_USE_MOCK" != "true" ] && [ -z "$VITE_API_URL" ]; then
+            echo "::error::Add a repository variable named VITE_API_URL (Settings > Secrets and variables > Actions > Variables), e.g. https://your-api.onrender.com/api"
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: Home/package-lock.json
+
+      - run: npm ci
+      - run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: Home/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
