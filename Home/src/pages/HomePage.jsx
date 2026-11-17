@@ -1,3 +1,4 @@
+import PredictionCard from '../components/PredictionCard.jsx';
 import { useEffect, useState } from 'react';
 import Header from '../components/Header.jsx';
 import BottomNav from '../components/BottomNav.jsx';
