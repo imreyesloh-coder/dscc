@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Header from '../components/Header.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 import ChangePlanModal from '../components/ChangePlanModal.jsx';
-import { getTrainingPlan, setDayDone, requestPlanChange } from '../api/mockApi.js';
+import { getTrainingPlan, setDayDone, requestPlanChange } from '../api/index.js';
 import './PlanPage.css';
 
 export default function PlanPage() {
@@ -70,7 +70,7 @@ export default function PlanPage() {
   // 5. The page
   return (
     <div className="app-shell">
-      <Header username="Zane" title="Your very own personalised training plan" />
+      <Header username={plan.username} title="Your very own personalised training plan" />
 
       <main className="page">
         {error && <p className="page-error" role="alert">{error}</p>}

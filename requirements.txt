@@ -1,10 +1,13 @@
 flask
 flask-sqlalchemy
 flask-cors
+flask-limiter
 anthropic
 python-dotenv
-psycopg2-binary
+psycopg[binary]
 scikit-learn==1.9.1
 pandas
 numpy
 joblib
+gunicorn
+tzdata

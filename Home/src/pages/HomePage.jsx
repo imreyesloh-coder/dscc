@@ -4,7 +4,7 @@ import BottomNav from '../components/BottomNav.jsx';
 import ScoreCard from '../components/ScoreCard.jsx';
 import PredictionCard from '../components/PredictionCard.jsx';
 import StationStepper from '../components/StationStepper.jsx';
-import { getHomeData, updateStations } from '../api/mockApi.js';
+import { getHomeData, updateStations } from '../api/index.js';
 import { formatRunTime, getGreeting } from '../utils/format.js';
 import './HomePage.css';
 

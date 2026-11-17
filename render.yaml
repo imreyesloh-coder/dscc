@@ -1,0 +1,21 @@
+# Render Blueprint for the Flask API. Create it from the Render dashboard:
+# New > Blueprint > pick this repo. Render then asks for the two secrets below.
+services:
+  - type: web
+    name: go-for-gold-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn "app:create_app()" --workers 1 --threads 4 --timeout 120
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DATABASE_URL        # the Neon connection string
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        value: https://notsting.github.io
+      - key: AI_RATE_LIMIT
+        value: 10 per hour
