@@ -56,6 +56,7 @@ export default function HomePage() {
         </section>
 
         <ScoreCard current={score.current} previous={score.previous} />
+        <PredictionCard stations={stations} />
 
         <section className="home__stations">
           <h3 className="section-label">Update your stations</h3>
