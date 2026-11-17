@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../../Downloads/go-for-gold"
+		},
+		{
+			"name": "dscc",
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}
